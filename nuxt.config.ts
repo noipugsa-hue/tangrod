@@ -92,7 +92,7 @@ export default defineNuxtConfig({
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com",
             "img-src 'self' data: blob: https: https://maps.googleapis.com https://maps.gstatic.com *.googleapis.com *.ggpht.com https://www.googletagmanager.com",
             "font-src 'self' data: https://fonts.gstatic.com",
-            "connect-src 'self' https://maps.googleapis.com https://*.googleapis.com https://www.google-analytics.com https://www.googletagmanager.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.firebaseio.com",
+            "connect-src 'self' https://maps.googleapis.com https://*.googleapis.com https://www.google-analytics.com https://www.googletagmanager.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.firebaseio.com https://api.openweathermap.org https://api-gateway.gistda.or.th https://nominatim.openstreetmap.org",
             "frame-src 'self' https://accounts.google.com https://*.firebaseapp.com",
             "worker-src 'self' blob:"
           ].join('; ')
