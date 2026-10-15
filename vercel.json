@@ -1,0 +1,18 @@
+{
+  "buildCommand": "pnpm run generate",
+  "outputDirectory": ".output/public",
+  "framework": "nuxtjs",
+  "regions": ["sin1"],
+  "env": {
+    "NUXT_PUBLIC_GOOGLE_MAPS_API_KEY": "",
+    "NUXT_PUBLIC_WEATHER_API_KEY": "",
+    "GISTDA_API_TOKEN": "",
+    "NUXT_PUBLIC_FIREBASE_API_KEY": "",
+    "NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN": "",
+    "NUXT_PUBLIC_FIREBASE_PROJECT_ID": "",
+    "NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET": "",
+    "NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "",
+    "NUXT_PUBLIC_FIREBASE_APP_ID": "",
+    "NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID": ""
+  }
+}
