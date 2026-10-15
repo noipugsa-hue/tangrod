@@ -28,10 +28,11 @@ export default defineEventHandler(async (event): Promise<GISTDAFloodResponse> =>
 
   // Validate token configuration
   if (!token) {
+    console.warn('[GISTDA] API token not configured, will return empty response (client will use mock data)')
     throw createError({
-      statusCode: 500,
-      statusMessage: 'GISTDA API token not configured',
-      message: 'Server configuration error: GISTDA_API_TOKEN environment variable is not set'
+      statusCode: 503,
+      statusMessage: 'Service Unavailable',
+      message: 'GISTDA API is not configured. Using mock data.'
     })
   }
 
@@ -58,7 +59,8 @@ export default defineEventHandler(async (event): Promise<GISTDAFloodResponse> =>
           'api_key': token,
           'Accept': 'application/json'
         },
-        timeout: 10000 // 10 second timeout
+        timeout: 5000, // 5 second timeout
+        retry: 0 // Don't retry on failure
       }
     )
 
@@ -87,11 +89,12 @@ export default defineEventHandler(async (event): Promise<GISTDAFloodResponse> =>
       return cached.data
     }
 
-    // No cache available - throw error
+    // No cache available - return error that client can handle gracefully
+    console.warn('[GISTDA] No cache available, client will use mock data')
     throw createError({
-      statusCode: 502,
-      statusMessage: 'Bad Gateway',
-      message: 'Failed to fetch flood data from GISTDA and no cached data available'
+      statusCode: 503,
+      statusMessage: 'Service Unavailable',
+      message: 'GISTDA API is temporarily unavailable. Please try again later.'
     })
   }
 })
