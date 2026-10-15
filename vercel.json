@@ -5,7 +5,7 @@
   "regions": ["sin1"],
   "env": {
     "NUXT_PUBLIC_GOOGLE_MAPS_API_KEY": "",
-    "NUXT_PUBLIC_WEATHER_API_KEY": "",
+    "NUXT_WEATHER_API_KEY": "",
     "GISTDA_API_TOKEN": "",
     "NUXT_PUBLIC_FIREBASE_API_KEY": "",
     "NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN": "",

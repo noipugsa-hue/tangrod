@@ -19,9 +19,9 @@
 NUXT_PUBLIC_GOOGLE_MAPS_API_KEY = AIzaSyD0DOpFw9soIbl4SrRS61JfagNcvdOszsM
 ```
 
-#### Weather API (OpenWeatherMap)
+#### Weather API (OpenWeatherMap - Private Server Only)
 ```
-NUXT_PUBLIC_WEATHER_API_KEY = 47658676599a8010fa208814963a9a2f
+NUXT_WEATHER_API_KEY = 47658676599a8010fa208814963a9a2f
 ```
 
 #### GISTDA Flood API (Private - Server Only)
@@ -48,6 +48,10 @@ NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID = G-BEX051KZVL
 3. ใส่ค่า (เช่น `AIzaSyD0DOpFw9soIbl4SrRS61JfagNcvdOszsM`)
 4. เลือก Environment: **Production, Preview, Development** (เลือกทั้ง 3)
 5. กด "Save"
+
+**หมายเหตุ:**
+- Variables ที่ขึ้นต้นด้วย `NUXT_PUBLIC_` จะถูก expose ไปยัง client-side
+- Variables อื่น ๆ (เช่น `NUXT_WEATHER_API_KEY`, `GISTDA_API_TOKEN`) จะเป็น server-side only เพื่อความปลอดภัย
 
 ### ขั้นตอนที่ 4: Redeploy
 
@@ -109,7 +113,7 @@ vercel login
 
 # ตั้งค่า environment variables
 vercel env add NUXT_PUBLIC_GOOGLE_MAPS_API_KEY
-vercel env add NUXT_PUBLIC_WEATHER_API_KEY
+vercel env add NUXT_WEATHER_API_KEY
 vercel env add GISTDA_API_TOKEN
 vercel env add NUXT_PUBLIC_FIREBASE_API_KEY
 vercel env add NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN
@@ -144,9 +148,10 @@ vercel --prod
 
 ### ปัญหา: Weather API ไม่ทำงาน
 **แก้ไข:**
-- ตรวจสอบว่า `NUXT_PUBLIC_WEATHER_API_KEY` ถูกตั้งค่า
+- ตรวจสอบว่า `NUXT_WEATHER_API_KEY` ถูกตั้งค่า (server-side only)
 - ตรวจสอบว่า API key ยังใช้งานได้ที่ OpenWeatherMap
-- เช็ค Console errors
+- เช็ค Console errors และ Network tab
+- Weather API จะเรียกผ่าน `/api/weather/current` endpoint
 
 ## อ่านเพิ่มเติม
 
