@@ -67,10 +67,10 @@ export default defineNuxtConfig({
     // Private keys (server-only, never exposed to client)
     gistdaApiToken: process.env.GISTDA_API_TOKEN || '',
     weatherApiKey: process.env.NUXT_WEATHER_API_KEY || '',
+    googleMapsApiKey: process.env.NUXT_GOOGLE_MAPS_API_KEY || '',
 
     // Public keys (exposed to client)
     public: {
-      googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
       firebaseApiKey: process.env.NUXT_PUBLIC_FIREBASE_API_KEY || '',
       firebaseAuthDomain: process.env.NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN || '',
       firebaseProjectId: process.env.NUXT_PUBLIC_FIREBASE_PROJECT_ID || '',

@@ -8,23 +8,7 @@ export interface GeocodingResult {
 }
 
 class GeocodingService {
-  private apiKey: string = ''
   private geocoder: google.maps.Geocoder | null = null
-
-  constructor() {
-    // API key will be retrieved when needed
-  }
-
-  /**
-   * Get API key from runtime config
-   */
-  private getApiKey(): string {
-    if (!this.apiKey && process.client) {
-      const config = useRuntimeConfig()
-      this.apiKey = config.public.googleMapsApiKey as string || ''
-    }
-    return this.apiKey
-  }
 
   /**
    * Initialize geocoder

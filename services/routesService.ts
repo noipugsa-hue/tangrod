@@ -19,24 +19,8 @@ export interface RouteResult {
 }
 
 class RoutesService {
-  private apiKey: string = ''
   private directionsService: google.maps.DirectionsService | null = null
   private directionsRenderer: google.maps.DirectionsRenderer | null = null
-
-  constructor() {
-    // API key will be retrieved when needed
-  }
-
-  /**
-   * Get API key from runtime config
-   */
-  private getApiKey(): string {
-    if (!this.apiKey && process.client) {
-      const config = useRuntimeConfig()
-      this.apiKey = config.public.googleMapsApiKey as string || ''
-    }
-    return this.apiKey
-  }
 
   /**
    * Initialize directions service

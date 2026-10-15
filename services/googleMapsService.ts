@@ -44,15 +44,26 @@ class GoogleMapsService {
   }
 
   /**
-   * Get API key from runtime config
+   * Get API key from server endpoint
    */
-  private getApiKey(): string {
-    if (!this.apiKey && process.client) {
-      const config = useRuntimeConfig()
-      this.apiKey = config.public.googleMapsApiKey as string || ''
-      console.log('[GoogleMaps] API Key loaded:', this.apiKey ? `${this.apiKey.substring(0, 10)}...` : 'MISSING')
+  private async getApiKey(): Promise<string> {
+    if (this.apiKey) {
+      return this.apiKey
     }
-    return this.apiKey
+
+    if (!process.client) {
+      return ''
+    }
+
+    try {
+      const response = await $fetch<{ apiKey: string }>('/api/config/google-maps')
+      this.apiKey = response.apiKey
+      console.log('[GoogleMaps] API Key loaded:', this.apiKey ? `${this.apiKey.substring(0, 10)}...` : 'MISSING')
+      return this.apiKey
+    } catch (error) {
+      console.error('[GoogleMaps] Failed to load API key:', error)
+      return ''
+    }
   }
 
   /**
@@ -66,8 +77,8 @@ class GoogleMapsService {
     }
 
     this.isLoading = true
-    this.loadPromise = new Promise((resolve, reject) => {
-      const apiKey = this.getApiKey()
+    this.loadPromise = new Promise(async (resolve, reject) => {
+      const apiKey = await this.getApiKey()
       if (!apiKey) {
         reject(new Error('Google Maps API key is not configured'))
         return

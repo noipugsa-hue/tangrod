@@ -14,9 +14,9 @@
 
 เพิ่ม variables ต่อไปนี้ (คัดลอกค่าจากไฟล์ `.env` ในเครื่อง):
 
-#### Google Maps API
+#### Google Maps API (Private - Server Only)
 ```
-NUXT_PUBLIC_GOOGLE_MAPS_API_KEY = AIzaSyD0DOpFw9soIbl4SrRS61JfagNcvdOszsM
+NUXT_GOOGLE_MAPS_API_KEY = AIzaSyD0DOpFw9soIbl4SrRS61JfagNcvdOszsM
 ```
 
 #### Weather API (OpenWeatherMap - Private Server Only)
@@ -44,14 +44,15 @@ NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID = G-BEX051KZVL
 
 สำหรับแต่ละ environment variable:
 1. กดปุ่ม "Add New"
-2. ใส่ชื่อ variable (เช่น `NUXT_PUBLIC_GOOGLE_MAPS_API_KEY`)
+2. ใส่ชื่อ variable (เช่น `NUXT_GOOGLE_MAPS_API_KEY`)
 3. ใส่ค่า (เช่น `AIzaSyD0DOpFw9soIbl4SrRS61JfagNcvdOszsM`)
 4. เลือก Environment: **Production, Preview, Development** (เลือกทั้ง 3)
 5. กด "Save"
 
 **หมายเหตุ:**
-- Variables ที่ขึ้นต้นด้วย `NUXT_PUBLIC_` จะถูก expose ไปยัง client-side
-- Variables อื่น ๆ (เช่น `NUXT_WEATHER_API_KEY`, `GISTDA_API_TOKEN`) จะเป็น server-side only เพื่อความปลอดภัย
+- ทุก API keys จะเป็น **server-side only** เพื่อความปลอดภัย
+- Variables ที่ขึ้นต้นด้วย `NUXT_PUBLIC_` (เช่น Firebase config) จะถูก expose ไปยัง client-side
+- Google Maps และ Weather API keys ถูกเรียกผ่าน server endpoints (/api/config/google-maps, /api/weather/current)
 
 ### ขั้นตอนที่ 4: Redeploy
 
@@ -71,10 +72,13 @@ NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID = G-BEX051KZVL
 - ข้อมูล mock data อยู่ใน `utils/seedData.ts`
 
 ### Google Maps API
-- ตรวจสอบว่า domain ของ Vercel ถูกเพิ่มใน Google Cloud Console
-- ไปที่ Google Cloud Console → APIs & Services → Credentials
-- เลือก API Key ของคุณ
-- เพิ่ม domain: `*.vercel.app` และ `yourdomain.com` (ถ้ามี custom domain)
+- Google Maps API key ถูกเก็บที่ server-side และส่งผ่าน `/api/config/google-maps` endpoint
+- แอปจะโหลด Google Maps script dynamically โดยดึง API key จาก server
+- สำหรับความปลอดภัยเพิ่มเติม แนะนำให้ตั้งค่า Application restrictions ใน Google Cloud Console:
+  - ไปที่ Google Cloud Console → APIs & Services → Credentials
+  - เลือก API Key ของคุณ
+  - ตั้งค่า Application restrictions → HTTP referrers
+  - เพิ่ม domain: `*.vercel.app`, `yourdomain.com`
 
 ### Firebase Authentication
 - ตรวจสอบว่า domain ของ Vercel ถูกเพิ่มใน Authorized domains
@@ -112,7 +116,7 @@ npm i -g vercel
 vercel login
 
 # ตั้งค่า environment variables
-vercel env add NUXT_PUBLIC_GOOGLE_MAPS_API_KEY
+vercel env add NUXT_GOOGLE_MAPS_API_KEY
 vercel env add NUXT_WEATHER_API_KEY
 vercel env add GISTDA_API_TOKEN
 vercel env add NUXT_PUBLIC_FIREBASE_API_KEY
